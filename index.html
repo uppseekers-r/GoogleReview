@@ -238,7 +238,7 @@
 </div>
 
 <script>
-    // CONFIGURATION: Replace this link with your exact Google Business review URL
+    // VERIFIED GOOGLE BUSINESS LINK FOR UPPSEEKERS
     const GOOGLE_REVIEW_URL = "https://g.page/r/CfgAD8DzeRV6EAE/review"; 
 
     let generatedReviewText = "";
@@ -261,76 +261,4 @@
             low: "The operations team manages tracking metrics, though responses could be expedited."
         },
         crit5: {
-            high: "The profile-building frameworks, research batches, and tactical milestone setups are deeply engaging.",
-            low: "Extracurricular options are discussed, but we sought highly unique, execution-level projects."
-        },
-        crit6: {
-            high: "University listing, strategic filtering, and target selection match global acceptance priorities perfectly.",
-            low: "The college lists cover target criteria, though we require more bespoke tracking models."
-        }
-    };
-
-    // Safe Event Listening prevents native browser crash/reloads
-    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        try {
-            const c1 = document.querySelector('input[name="crit1"]:checked').value;
-            const c2 = document.querySelector('input[name="crit2"]:checked').value;
-            const c3 = document.querySelector('input[name="crit3"]:checked').value;
-            const c4 = document.querySelector('input[name="crit4"]:checked').value;
-            const c5 = document.querySelector('input[name="crit5"]:checked').value;
-            const c6 = document.querySelector('input[name="crit6"]:checked').value;
-
-            let parts = [];
-            parts.push(c1 >= 4 ? summaries.crit1.high : summaries.crit1.low);
-            parts.push(c2 >= 4 ? summaries.crit2.high : summaries.crit2.low);
-            parts.push(c3 >= 4 ? summaries.crit3.high : summaries.crit3.low);
-            parts.push(c4 >= 4 ? summaries.crit4.high : summaries.crit4.low);
-            parts.push(c5 >= 4 ? summaries.crit5.high : summaries.crit5.low);
-            parts.push(c6 >= 4 ? summaries.crit6.high : summaries.crit6.low);
-
-            // Assemble text neatly
-            generatedReviewText = "Highly structured experience with Uppseekers! " + parts.slice(0, 3).join(" ") + "\n\n" + parts.slice(3, 6).join(" ");
-
-            // Switch views safely
-            document.getElementById('formContainer').style.display = 'none';
-            document.getElementById('successContainer').style.display = 'block';
-            document.getElementById('reviewPreview').innerText = generatedReviewText;
-        } catch(err) {
-            alert("Please make sure you have selected a rating for all 6 items!");
-        }
-    });
-
-    // Explicit User Action allows the copy permissions error to disappear entirely
-    document.getElementById('actionBtn').addEventListener('click', function() {
-        const btn = this;
-        
-        // Native clean fallback string copy strategy
-        const textArea = document.createElement("textarea");
-        textArea.value = generatedReviewText;
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-            document.execCommand('copy');
-            document.getElementById('statusMessage').innerHTML = "✅ Text Copied to Clipboard! Opening Google Reviews now...";
-            document.getElementById('statusMessage').style.backgroundColor = "#d1fae5";
-            document.getElementById('statusMessage').style.color = "#065f46";
-        } catch (err) {
-            console.log('Fallback error handling triggered');
-        }
-        document.body.removeChild(textArea);
-
-        // Instantly trigger Google Tab redirect safely after copying text
-        setTimeout(function() {
-            if(GOOGLE_REVIEW_URL !== "https://g.page/r/CfgAD8DzeRV6EAE/review") {
-                window.open(GOOGLE_REVIEW_URL, '_blank');
-            } else {
-                alert("Form is working perfectly! Note: Remember to replace 'YOUR_GOOGLE_REVIEW_LINK_HERE' with your real Google Business link inside the code.");
-            }
-        }, 700);
-    });
-</script>
-
-</body>
-</html>
+            high:
