@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uppseekers - Parent & Student Feedback Portal</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --star-color: #fbbf24;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--card-bg);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 28px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .criterion-box {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .criterion-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stars {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 6px;
+        }
+
+        .stars input {
+            display: none;
+        }
+
+        .stars label {
+            font-size: 30px;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .stars input:checked ~ label,
+        .stars label:hover,
+        .stars label:hover ~ label {
+            color: var(--star-color);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Success and Redirection Screen styles */
+        .modal {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .modal h2 {
+            color: #10b981;
+            margin-bottom: 10px;
+        }
+
+        .preview-box {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            font-style: italic;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .alert-toast {
+            color: #1e3a8a;
+            background: #dbeafe;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="formContainer">
+    <div class="header">
+        <h1>Share Your Uppseekers Journey</h1>
+        <p>Your feedback helps us continuously elevate our student mentoring standards.</p>
+    </div>
+
+    <form id="feedbackForm" onsubmit="processFeedback(event)">
+        <div class="criterion-box">
+            <div class="criterion-title">1. Advisor Support Pre-onboarding</div>
+            <div class="stars">
+                <input type="radio" id="c1-5" name="crit1" value="5" required><label for="c1-5">★</label>
+                <input type="radio" id="c1-4" name="crit1" value="4"><label for="c1-4">★</label>
+                <input type="radio" id="c1-3" name="crit1" value="3"><label for="c1-3">★</label>
+                <input type="radio" id="c1-2" name="crit1" value="2"><label for="c1-2">★</label>
+                <input type="radio" id="c1-1" name="crit1" value="1"><label for="c1-1">★</label>
+            </div>
+        </div>
+
+        <div class="criterion-box">
+            <div class="criterion-title">2. Counselor Support</div>
+            <div class="stars">
+                <input type="radio" id="c2-5" name="crit2" value="5" required><label for="c2-5">★</label>
+                <input type="radio" id="c2-4" name="crit2" value="4"><label for="c2-4">★</label>
+                <input type="radio" id="c2-3" name="crit2" value="3"><label for="c2-3">★</label>
+                <input type="radio" id="c2-2" name="crit2" value="2"><label for="c2-2">★</label>
+                <input type="radio" id="c2-1" name="crit2" value="1"><label for="c2-1">★</label>
+            </div>
+        </div>
+
+        <div class="criterion-box">
+            <div class="criterion-title">3. Roadmap Clarity & Structure</div>
+            <div class="stars">
+                <input type="radio" id="c3-5" name="crit3" value="5" required><label for="c3-5">★</label>
+                <input type="radio" id="c3-4" name="crit3" value="4"><label for="c3-4">★</label>
+                <input type="radio" id="c3-3" name="crit3" value="3"><label for="c3-3">★</label>
+                <input type="radio" id="c3-2" name="crit3" value="2"><label for="c3-2">★</label>
+                <input type="radio" id="c3-1" name="crit3" value="1"><label for="c3-1">★</label>
+            </div>
+        </div>
+
+        <div class="criterion-box">
+            <div class="criterion-title">4. Services Support After Onboarding</div>
+            <div class="stars">
+                <input type="radio" id="c4-5" name="crit4" value="5" required><label for="c4-5">★</label>
+                <input type="radio" id="c4-4" name="crit4" value="4"><label for="c4-4">★</label>
+                <input type="radio" id="c4-3" name="crit4" value="3"><label for="c4-3">★</label>
+                <input type="radio" id="c4-2" name="crit4" value="2"><label for="c4-2">★</label>
+                <input type="radio" id="c4-1" name="crit4" value="1"><label for="c4-1">★</label>
+            </div>
+        </div>
+
+        <div class="criterion-box">
+            <div class="criterion-title">5. Profile Building and Planning</div>
+            <div class="stars">
+                <input type="radio" id="c5-5" name="crit5" value="5" required><label for="c5-5">★</label>
+                <input type="radio" id="c5-4" name="crit5" value="4"><label for="c5-4">★</label>
+                <input type="radio" id="c5-3" name="crit5" value="3"><label for="c5-3">★</label>
+                <input type="radio" id="c5-2" name="crit5" value="2"><label for="c5-2">★</label>
+                <input type="radio" id="c5-1" name="crit5" value="1"><label for="c5-1">★</label>
+            </div>
+        </div>
+
+        <div class="criterion-box">
+            <div class="criterion-title">6. University Listing, Planning & Support</div>
+            <div class="stars">
+                <input type="radio" id="c6-5" name="crit6" value="5" required><label for="c6-5">★</label>
+                <input type="radio" id="c6-4" name="crit6" value="4"><label for="c6-4">★</label>
+                <input type="radio" id="c6-3" name="crit6" value="3"><label for="c6-3">★</label>
+                <input type="radio" id="c6-2" name="crit6" value="2"><label for="c6-2">★</label>
+                <input type="radio" id="c6-1" name="crit6" value="1"><label for="c6-1">★</label>
+            </div>
+        </div>
+
+        <button type="submit">Submit Feedback & Go to Google Reviews</button>
+    </form>
+</div>
+
+<div class="container modal" id="successContainer">
+    <h2>Thank You For Your Review!</h2>
+    <div class="alert-toast">📋 Your detailed review text has been copied to your clipboard!</div>
+    <p>We are opening our official Google Review page right now. Please right-click and <strong>Paste (Ctrl+V)</strong> your auto-generated review into the text box!</p>
+    
+    <div class="preview-box" id="reviewPreview"></div>
+    
+    <button onclick="redirectToGoogle()">If Google page didn't open, click here</button>
+</div>
+
+<script>
+    // Config: Paste your exact Google review link inside the quotes below
+    const GOOGLE_REVIEW_URL = https://g.page/r/CfgAD8DzeRV6EAE/review; 
+    let generatedReviewText = "";
+
+    // Mapping high-fidelity professional text strings dynamically based on stars 
+    const summaries = {
+        crit1: {
+            high: "The pre-onboarding advisor support was exceptional, addressing all our entry questions clearly.",
+            low: "The initial advisor interactions gave us an overview of the options, though we looked for deeper initial alignment."
+        },
+        crit2: {
+            high: "Our counselor has been brilliant, acting as an accountability anchor and expert mentor for the child.",
+            low: "Counselor support is provided, though communication frequencies could be fine-tuned."
+        },
+        crit3: {
+            high: "The student roadmap is incredibly meticulous, clear, and perfectly broken down step-by-step.",
+            low: "A timeline structure was offered, though it required manual optimization to fit our busy schedules."
+        },
+        crit4: {
+            high: "Post-onboarding operations and parallel backend services support are highly systematic and frictionless.",
+            low: "The operations team manages tracking metrics, though standard responses could be expedited."
+        },
+        crit5: {
+            high: "The profile-building frameworks, research batches, and tactical milestone setups are deeply engaging.",
+            low: "Extracurricular profiles are discussed, but we sought highly unique, execution-level capstones."
+        },
+        crit6: {
+            high: "University listing, strategic filtering, and target selection match global acceptance priorities perfectly.",
+            low: "The college lists cover target criteria, though we require more bespoke tracking models."
+        }
+    };
+
+    function processFeedback(event) {
+        event.preventDefault();
+        
+        // Grab values out of 5 stars selected
+        const c1 = document.querySelector('input[name="crit1"]:checked').value;
+        const c2 = document.querySelector('input[name="crit2"]:checked').value;
+        const c3 = document.querySelector('input[name="crit3"]:checked').value;
+        const c4 = document.querySelector('input[name="crit4"]:checked').value;
+        const c5 = document.querySelector('input[name="crit5"]:checked').value;
+        const c6 = document.querySelector('input[name="crit6"]:checked').value;
+
+        // Auto-generate a beautiful cohesive paragraph based on conditions
+        let parts = [];
+        parts.push(c1 >= 4 ? summaries.crit1.high : summaries.crit1.low);
+        parts.push(c2 >= 4 ? summaries.crit2.high : summaries.crit2.low);
+        parts.push(c3 >= 4 ? summaries.crit3.high : summaries.crit3.low);
+        parts.push(c4 >= 4 ? summaries.crit4.high : summaries.crit4.low);
+        parts.push(c5 >= 4 ? summaries.crit5.high : summaries.crit5.low);
+        parts.push(c6 >= 4 ? summaries.crit6.high : summaries.crit6.low);
+
+        // Combine into a clean 2-3 line structured feedback review block
+        generatedReviewText = "Highly structured experience with Uppseekers! " + parts.slice(0, 3).join(" ") + "\n\n" + parts.slice(3, 6).join(" ");
+
+        // Copy directly into user clipboard automatically on click
+        navigator.clipboard.writeText(generatedReviewText).then(() => {
+            showSuccessScreen();
+        }).catch(err => {
+            // Fallback strategy if clipboard permissions are constrained
+            showSuccessScreen();
+        });
+    }
+
+    function showSuccessScreen() {
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('successContainer').style.display = 'block';
+        document.getElementById('reviewPreview').innerText = generatedReviewText;
+        
+        // Open the review pop-up instantly
+        redirectToGoogle();
+    }
+
+    function redirectToGoogle() {
+        if(GOOGLE_REVIEW_URL !== "https://g.page/r/CfgAD8DzeRV6EAE/review") {
+            window.open(GOOGLE_REVIEW_URL, '_blank');
+        } else {
+            alert("Configuration Note: Please update the 'GOOGLE_REVIEW_URL' variable inside the script tag of your HTML code to point directly to your business page!");
+        }
+    }
+</script>
+
+</body>
+</html>
