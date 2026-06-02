@@ -107,11 +107,10 @@
             background-color: #1d4ed8;
         }
 
-        /* Success and Redirection Screen styles */
         .modal {
             display: none;
             text-align: center;
-            padding: 20px 0;
+            padding: 10px 0;
         }
 
         .modal h2 {
@@ -129,16 +128,24 @@
             border-left: 4px solid var(--accent);
             font-size: 14px;
             line-height: 1.6;
+            word-wrap: break-word;
         }
 
         .alert-toast {
             color: #1e3a8a;
             background: #dbeafe;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 600;
             margin-bottom: 15px;
+        }
+
+        .copy-btn {
+            background-color: #10b981;
+        }
+        .copy-btn:hover {
+            background-color: #059669;
         }
     </style>
 </head>
@@ -150,7 +157,7 @@
         <p>Your feedback helps us continuously elevate our student mentoring standards.</p>
     </div>
 
-    <form id="feedbackForm" onsubmit="processFeedback(event)">
+    <form id="feedbackForm">
         <div class="criterion-box">
             <div class="criterion-title">1. Advisor Support Pre-onboarding</div>
             <div class="stars">
@@ -217,46 +224,45 @@
             </div>
         </div>
 
-        <button type="submit">Submit Feedback & Go to Google Reviews</button>
+        <button type="submit">Generate Review & Continue</button>
     </form>
 </div>
 
 <div class="container modal" id="successContainer">
-    <h2>Thank You For Your Review!</h2>
-    <div class="alert-toast">📋 Your detailed review text has been copied to your clipboard!</div>
-    <p>We are opening our official Google Review page right now. Please right-click and <strong>Paste (Ctrl+V)</strong> your auto-generated review into the text box!</p>
+    <h2>Review Generated Successfully!</h2>
+    <div class="alert-toast" id="statusMessage">👇 Click the green button below to copy your text!</div>
     
     <div class="preview-box" id="reviewPreview"></div>
     
-    <button onclick="redirectToGoogle()">If Google page didn't open, click here</button>
+    <button class="copy-btn" id="actionBtn">📋 Copy Review & Open Google Reviews</button>
 </div>
 
 <script>
-    // Config: Paste your exact Google review link inside the quotes below
-    const GOOGLE_REVIEW_URL = https://g.page/r/CfgAD8DzeRV6EAE/review; 
+    // CONFIGURATION: Replace this link with your exact Google Business review URL
+    const GOOGLE_REVIEW_URL = "https://g.page/r/CfgAD8DzeRV6EAE/review"; 
+
     let generatedReviewText = "";
 
-    // Mapping high-fidelity professional text strings dynamically based on stars 
     const summaries = {
         crit1: {
-            high: "The pre-onboarding advisor support was exceptional, addressing all our entry questions clearly.",
-            low: "The initial advisor interactions gave us an overview of the options, though we looked for deeper initial alignment."
+            high: "The pre-onboarding advisor support was exceptional, addressing all our initial questions clearly.",
+            low: "The initial advisor interactions gave us an overview of options, though we looked for deeper initial alignment."
         },
         crit2: {
-            high: "Our counselor has been brilliant, acting as an accountability anchor and expert mentor for the child.",
+            high: "Our counselor has been brilliant, acting as an accountability anchor and expert mentor for our child.",
             low: "Counselor support is provided, though communication frequencies could be fine-tuned."
         },
         crit3: {
             high: "The student roadmap is incredibly meticulous, clear, and perfectly broken down step-by-step.",
-            low: "A timeline structure was offered, though it required manual optimization to fit our busy schedules."
+            low: "A timeline structure was offered, though it required custom adjustments to fit our busy schedule."
         },
         crit4: {
-            high: "Post-onboarding operations and parallel backend services support are highly systematic and frictionless.",
-            low: "The operations team manages tracking metrics, though standard responses could be expedited."
+            high: "Post-onboarding operations and backend services support are highly systematic and frictionless.",
+            low: "The operations team manages tracking metrics, though responses could be expedited."
         },
         crit5: {
             high: "The profile-building frameworks, research batches, and tactical milestone setups are deeply engaging.",
-            low: "Extracurricular profiles are discussed, but we sought highly unique, execution-level capstones."
+            low: "Extracurricular options are discussed, but we sought highly unique, execution-level projects."
         },
         crit6: {
             high: "University listing, strategic filtering, and target selection match global acceptance priorities perfectly.",
@@ -264,54 +270,66 @@
         }
     };
 
-    function processFeedback(event) {
-        event.preventDefault();
+    // Safe Event Listening prevents native browser crash/reloads
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        // Grab values out of 5 stars selected
-        const c1 = document.querySelector('input[name="crit1"]:checked').value;
-        const c2 = document.querySelector('input[name="crit2"]:checked').value;
-        const c3 = document.querySelector('input[name="crit3"]:checked').value;
-        const c4 = document.querySelector('input[name="crit4"]:checked').value;
-        const c5 = document.querySelector('input[name="crit5"]:checked').value;
-        const c6 = document.querySelector('input[name="crit6"]:checked').value;
+        try {
+            const c1 = document.querySelector('input[name="crit1"]:checked').value;
+            const c2 = document.querySelector('input[name="crit2"]:checked').value;
+            const c3 = document.querySelector('input[name="crit3"]:checked').value;
+            const c4 = document.querySelector('input[name="crit4"]:checked').value;
+            const c5 = document.querySelector('input[name="crit5"]:checked').value;
+            const c6 = document.querySelector('input[name="crit6"]:checked').value;
 
-        // Auto-generate a beautiful cohesive paragraph based on conditions
-        let parts = [];
-        parts.push(c1 >= 4 ? summaries.crit1.high : summaries.crit1.low);
-        parts.push(c2 >= 4 ? summaries.crit2.high : summaries.crit2.low);
-        parts.push(c3 >= 4 ? summaries.crit3.high : summaries.crit3.low);
-        parts.push(c4 >= 4 ? summaries.crit4.high : summaries.crit4.low);
-        parts.push(c5 >= 4 ? summaries.crit5.high : summaries.crit5.low);
-        parts.push(c6 >= 4 ? summaries.crit6.high : summaries.crit6.low);
+            let parts = [];
+            parts.push(c1 >= 4 ? summaries.crit1.high : summaries.crit1.low);
+            parts.push(c2 >= 4 ? summaries.crit2.high : summaries.crit2.low);
+            parts.push(c3 >= 4 ? summaries.crit3.high : summaries.crit3.low);
+            parts.push(c4 >= 4 ? summaries.crit4.high : summaries.crit4.low);
+            parts.push(c5 >= 4 ? summaries.crit5.high : summaries.crit5.low);
+            parts.push(c6 >= 4 ? summaries.crit6.high : summaries.crit6.low);
 
-        // Combine into a clean 2-3 line structured feedback review block
-        generatedReviewText = "Highly structured experience with Uppseekers! " + parts.slice(0, 3).join(" ") + "\n\n" + parts.slice(3, 6).join(" ");
+            // Assemble text neatly
+            generatedReviewText = "Highly structured experience with Uppseekers! " + parts.slice(0, 3).join(" ") + "\n\n" + parts.slice(3, 6).join(" ");
 
-        // Copy directly into user clipboard automatically on click
-        navigator.clipboard.writeText(generatedReviewText).then(() => {
-            showSuccessScreen();
-        }).catch(err => {
-            // Fallback strategy if clipboard permissions are constrained
-            showSuccessScreen();
-        });
-    }
-
-    function showSuccessScreen() {
-        document.getElementById('formContainer').style.display = 'none';
-        document.getElementById('successContainer').style.display = 'block';
-        document.getElementById('reviewPreview').innerText = generatedReviewText;
-        
-        // Open the review pop-up instantly
-        redirectToGoogle();
-    }
-
-    function redirectToGoogle() {
-        if(GOOGLE_REVIEW_URL !== "https://g.page/r/CfgAD8DzeRV6EAE/review") {
-            window.open(GOOGLE_REVIEW_URL, '_blank');
-        } else {
-            alert("Configuration Note: Please update the 'GOOGLE_REVIEW_URL' variable inside the script tag of your HTML code to point directly to your business page!");
+            // Switch views safely
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('successContainer').style.display = 'block';
+            document.getElementById('reviewPreview').innerText = generatedReviewText;
+        } catch(err) {
+            alert("Please make sure you have selected a rating for all 6 items!");
         }
-    }
+    });
+
+    // Explicit User Action allows the copy permissions error to disappear entirely
+    document.getElementById('actionBtn').addEventListener('click', function() {
+        const btn = this;
+        
+        // Native clean fallback string copy strategy
+        const textArea = document.createElement("textarea");
+        textArea.value = generatedReviewText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            document.getElementById('statusMessage').innerHTML = "✅ Text Copied to Clipboard! Opening Google Reviews now...";
+            document.getElementById('statusMessage').style.backgroundColor = "#d1fae5";
+            document.getElementById('statusMessage').style.color = "#065f46";
+        } catch (err) {
+            console.log('Fallback error handling triggered');
+        }
+        document.body.removeChild(textArea);
+
+        // Instantly trigger Google Tab redirect safely after copying text
+        setTimeout(function() {
+            if(GOOGLE_REVIEW_URL !== "https://g.page/r/CfgAD8DzeRV6EAE/review") {
+                window.open(GOOGLE_REVIEW_URL, '_blank');
+            } else {
+                alert("Form is working perfectly! Note: Remember to replace 'YOUR_GOOGLE_REVIEW_LINK_HERE' with your real Google Business link inside the code.");
+            }
+        }, 700);
+    });
 </script>
 
 </body>
