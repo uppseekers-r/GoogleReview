@@ -3,218 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Share Your Feedback - Uppseekers</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Uppseekers - Parent & Student Feedback Portal</title>
     <style>
-        .star-rating input:checked ~ label,
-        .star-rating label:hover,
-        .star-rating label:hover ~ label {
-            color: #FBBF24;
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --star-color: #fbbf24;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--card-bg);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 28px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .criterion-box {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .criterion-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stars {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 6px;
+        }
+
+        .stars input {
+            display: none;
+        }
+
+        .stars label {
+            font-size: 30px;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .stars input:checked ~ label,
+        .stars label:hover,
+        .stars label:hover ~ label {
+            color: var(--star-color);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        button:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .modal {
+            display: none;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .modal h2 {
+            color: #10b981;
+            margin-bottom: 10px;
+        }
+
+        .preview-box {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            font-style: italic;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent);
+            font-size: 14px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .alert-toast {
+            color: #1e3a8a;
+            background: #dbeafe;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .copy-btn {
+            background-color: #10b981;
+        }
+        .copy-btn:hover {
+            background-color: #059669;
         }
     </style>
 </head>
-<body class="bg-slate-50 font-sans antialiased min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<body>
 
-    <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8 border border-slate-100 transition-all duration-300">
-        
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Uppseekers Feedback</h2>
-            <p class="mt-2 text-sm text-slate-600">Your insights help us continuously elevate our counseling and student mentoring standards.</p>
-        </div>
-
-        <form id="feedbackForm" class="space-y-6">
-            
-            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <label class="block text-base font-semibold text-slate-800 mb-2">1. Advisor Support Pre-onboarding</label>
-                <div class="star-rating flex flex-row-reverse justify-end gap-2 text-3xl text-slate-300 cursor-pointer">
-                    <input type="radio" id="c1-5" name="criteria1" value="5" class="hidden" required /><label for="c1-5" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c1-4" name="criteria1" value="4" class="hidden" /><label for="c1-4" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c1-3" name="criteria1" value="3" class="hidden" /><label for="c1-3" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c1-2" name="criteria1" value="2" class="hidden" /><label for="c1-2" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c1-1" name="criteria1" value="1" class="hidden" /><label for="c1-1" class="hover:scale-110 transition-transform">&#9733;</label>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <label class="block text-base font-semibold text-slate-800 mb-2">2. Counselor Support & Mentorship</label>
-                <div class="star-rating flex flex-row-reverse justify-end gap-2 text-3xl text-slate-300 cursor-pointer">
-                    <input type="radio" id="c2-5" name="criteria2" value="5" class="hidden" required /><label for="c2-5" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c2-4" name="criteria2" value="4" class="hidden" /><label for="c2-4" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c2-3" name="criteria2" value="3" class="hidden" /><label for="c2-3" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c2-2" name="criteria2" value="2" class="hidden" /><label for="c2-2" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c2-1" name="criteria2" value="1" class="hidden" /><label for="c2-1" class="hover:scale-110 transition-transform">&#9733;</label>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <label class="block text-base font-semibold text-slate-800 mb-2">3. Strategy & Roadmap Plan Execution</label>
-                <div class="star-rating flex flex-row-reverse justify-end gap-2 text-3xl text-slate-300 cursor-pointer">
-                    <input type="radio" id="c3-5" name="criteria3" value="5" class="hidden" required /><label for="c3-5" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c3-4" name="criteria3" value="4" class="hidden" /><label for="c3-4" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c3-3" name="criteria3" value="3" class="hidden" /><label for="c3-3" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c3-2" name="criteria3" value="2" class="hidden" /><label for="c3-2" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c3-1" name="criteria3" value="1" class="hidden" /><label for="c3-1" class="hover:scale-110 transition-transform">&#9733;</label>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <label class="block text-base font-semibold text-slate-800 mb-2">4. Services Support Post-Onboarding</label>
-                <div class="star-rating flex flex-row-reverse justify-end gap-2 text-3xl text-slate-300 cursor-pointer">
-                    <input type="radio" id="c4-5" name="criteria4" value="5" class="hidden" required /><label for="c4-5" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c4-4" name="criteria4" value="4" class="hidden" /><label for="c4-4" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c4-3" name="criteria4" value="3" class="hidden" /><label for="c4-3" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c4-2" name="criteria4" value="2" class="hidden" /><label for="c4-2" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c4-1" name="criteria4" value="1" class="hidden" /><label for="c4-1" class="hover:scale-110 transition-transform">&#9733;</label>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <label class="block text-base font-semibold text-slate-800 mb-2">5. Profile Building & Milestone Planning</label>
-                <div class="star-rating flex flex-row-reverse justify-end gap-2 text-3xl text-slate-300 cursor-pointer">
-                    <input type="radio" id="c5-5" name="criteria5" value="5" class="hidden" required /><label for="c5-5" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c5-4" name="criteria5" value="4" class="hidden" /><label for="c5-4" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c5-3" name="criteria5" value="3" class="hidden" /><label for="c5-3" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c5-2" name="criteria5" value="2" class="hidden" /><label for="c5-2" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c5-1" name="criteria5" value="1" class="hidden" /><label for="c5-1" class="hover:scale-110 transition-transform">&#9733;</label>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <label class="block text-base font-semibold text-slate-800 mb-2">6. University Listing & Admissions Guidance</label>
-                <div class="star-rating flex flex-row-reverse justify-end gap-2 text-3xl text-slate-300 cursor-pointer">
-                    <input type="radio" id="c6-5" name="criteria6" value="5" class="hidden" required /><label for="c6-5" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c6-4" name="criteria6" value="4" class="hidden" /><label for="c6-4" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c6-3" name="criteria6" value="3" class="hidden" /><label for="c6-3" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c6-2" name="criteria6" value="2" class="hidden" /><label for="c6-2" class="hover:scale-110 transition-transform">&#9733;</label>
-                    <input type="radio" id="c6-1" name="criteria6" value="1" class="hidden" /><label for="c6-1" class="hover:scale-110 transition-transform">&#9733;</label>
-                </div>
-            </div>
-
-            <button type="submit" class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-md text-base font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200">
-                Submit Feedback & Go to Google Reviews
-            </button>
-        </form>
-
-        <div id="reviewGenerationPage" class="hidden space-y-6">
-            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-5 text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 mb-3">
-                    <svg class="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold text-emerald-900">Your Review is Ready!</h3>
-                <p class="text-sm text-emerald-700 mt-1">To submit to Google, simply click the button below. Your automated review text has been generated specifically based on your inputs.</p>
-            </div>
-
-            <div class="space-y-2">
-                <label class="block text-sm font-semibold text-slate-700">Generated Review Preview:</label>
-                <div id="reviewTextContainer" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-slate-800 text-sm leading-relaxed whitespace-pre-line max-h-48 overflow-y-auto font-medium">
-                    </div>
-            </div>
-
-            <button id="copyAndRedirectBtn" type="button" class="w-full flex items-center justify-center gap-2 py-4 px-4 rounded-xl shadow-lg text-base font-bold text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-all duration-200 transform active:scale-[0.99]">
-                <span>Copy Review & Open Google Reviews</span>
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                </svg>
-            </button>
-            
-            <p class="text-xs text-center text-slate-500 font-medium">Step: The button will instantly copy this text and open Google Reviews in a new window. Just right-click paste your content!</p>
-        </div>
-
+<div class="container" id="formContainer">
+    <div class="header">
+        <h1>Share Your Uppseekers Journey</h1>
+        <p>Your feedback helps us continuously elevate our student mentoring standards.</p>
     </div>
 
-    <script>
-        // Production Configuration
-        const GOOGLE_REVIEW_URL = "https://g.page/r/CfnvJLxAqHnPEBM/review";
+    <form id="feedbackForm">
+        <div class="criterion-box">
+            <div class="criterion-title">1. Advisor Support Pre-onboarding</div>
+            <div class="stars">
+                <input type="radio" id="c1-5" name="crit1" value="5" required><label for="c1-5">★</label>
+                <input type="radio" id="c1-4" name="crit1" value="4"><label for="c1-4">★</label>
+                <input type="radio" id="c1-3" name="crit1" value="3"><label for="c1-3">★</label>
+                <input type="radio" id="c1-2" name="crit1" value="2"><label for="c1-2">★</label>
+                <input type="radio" id="c1-1" name="crit1" value="1"><label for="c1-1">★</label>
+            </div>
+        </div>
 
-        // Structured Comment Engine Phrases mapping
-        const phraseLibrary = {
-            criteria1: {
-                high: ["The team provided exemplary advisory support during our initial pre-onboarding interactions.", "Extremely transparent and precise introductory calls that clear out all initial process confusion."],
-                low: ["The early stage pre-onboarding introductory conversations left room for logistical operational updates.", "Communication during early engagement and program signup alignment can be managed better."]
-            },
-            criteria2: {
-                high: ["Our counselor’s approach to personalized regular mentorship sessions is exceptionally managed.", "The active counseling team delivers precise alignment and objective accountability checkpoints."],
-                low: ["Counselor communication tracking requires more structured weekly interactive intervals.", "Expected deeper interactive strategic evaluation mapping during standard check-in milestones."]
-            },
-            criteria3: {
-                high: ["The execution roadmap architecture sets definitive timelines that completely ease family stress.", "Every analytical phase of our tailored trajectory plan is organized and transparent."],
-                low: ["Strategic roadmaps require slightly higher customization intervals to balance student limits.", "The execution path tracking milestones require additional adaptive agility metrics updates."]
-            },
-            criteria4: {
-                high: ["Post-onboarding functional operational query coordination is highly responsive and fast.", "The administrative assistance pipeline remains proactive across every academic milestone."],
-                low: ["Post-onboarding customer coordination requires faster turnaround execution cycles.", "The client resolution tracking network requires slightly more centralized workflow transparency."]
-            },
-            criteria5: {
-                high: ["Profile building projects and practical capstone initiatives are expertly structural on the ground.", "Extracurricular milestone execution mapping completely shields students from chaotic micro-management."],
-                low: ["Profile architecture pipeline planning could benefit from enhanced options matching student profiles.", "Ground-level structural support execution for community engagement projects requires earlier launch timing."]
-            },
-            criteria6: {
-                high: ["University profiling and listing choices match optimal balance boundaries.", "Admissions planning logic takes real individual criteria limits into careful consideration."],
-                low: ["University listing options require deeper collaborative data overview sessions with families.", "Admissions analytical reviews should feature more broad target institution option boundaries."]
-            }
-        };
+        <div class="criterion-box">
+            <div class="criterion-title">2. Counselor Support</div>
+            <div class="stars">
+                <input type="radio" id="c2-5" name="crit2" value="5" required><label for="c2-5">★</label>
+                <input type="radio" id="c2-4" name="crit2" value="4"><label for="c2-4">★</label>
+                <input type="radio" id="c2-3" name="crit2" value="3"><label for="c2-3">★</label>
+                <input type="radio" id="c2-2" name="crit2" value="2"><label for="c2-2">★</label>
+                <input type="radio" id="c2-1" name="crit2" value="1"><label for="c2-1">★</label>
+            </div>
+        </div>
 
-        // DOM Handle Interventions
-        const feedbackForm = document.getElementById('feedbackForm');
-        const reviewGenerationPage = document.getElementById('reviewGenerationPage');
-        const reviewTextContainer = document.getElementById('reviewTextContainer');
-        const copyAndRedirectBtn = document.getElementById('copyAndRedirectBtn');
+        <div class="criterion-box">
+            <div class="criterion-title">3. Roadmap Clarity & Structure</div>
+            <div class="stars">
+                <input type="radio" id="c3-5" name="crit3" value="5" required><label for="c3-5">★</label>
+                <input type="radio" id="c3-4" name="crit3" value="4"><label for="c3-4">★</label>
+                <input type="radio" id="c3-3" name="crit3" value="3"><label for="c3-3">★</label>
+                <input type="radio" id="c3-2" name="crit3" value="2"><label for="c3-2">★</label>
+                <input type="radio" id="c3-1" name="crit3" value="1"><label for="c3-1">★</label>
+            </div>
+        </div>
 
-        let sharedReviewPayloadString = "";
+        <div class="criterion-box">
+            <div class="criterion-title">4. Services Support After Onboarding</div>
+            <div class="stars">
+                <input type="radio" id="c4-5" name="crit4" value="5" required><label for="c4-5">★</label>
+                <input type="radio" id="c4-4" name="crit4" value="4"><label for="c4-4">★</label>
+                <input type="radio" id="c4-3" name="crit4" value="3"><label for="c4-3">★</label>
+                <input type="radio" id="c4-2" name="crit4" value="2"><label for="c4-2">★</label>
+                <input type="radio" id="c4-1" name="crit4" value="1"><label for="c4-1">★</label>
+            </div>
+        </div>
 
-        // Core Form Event Handling
-        feedbackForm.addEventListener('submit', function(event) {
-            // STOP form from refreshing the page state
-            event.preventDefault();
+        <div class="criterion-box">
+            <div class="criterion-title">5. Profile Building and Planning</div>
+            <div class="stars">
+                <input type="radio" id="c5-5" name="crit5" value="5" required><label for="c5-5">★</label>
+                <input type="radio" id="c5-4" name="crit5" value="4"><label for="c5-4">★</label>
+                <input type="radio" id="c5-3" name="crit5" value="3"><label for="c5-3">★</label>
+                <input type="radio" id="c5-2" name="crit5" value="2"><label for="c5-2">★</label>
+                <input type="radio" id="c5-1" name="crit5" value="1"><label for="c5-1">★</label>
+            </div>
+        </div>
 
-            // Extract rating metrics values cleanly
-            const r1 = parseInt(document.querySelector('input[name="criteria1"]:checked').value);
-            const r2 = parseInt(document.querySelector('input[name="criteria2"]:checked').value);
-            const r3 = parseInt(document.querySelector('input[name="criteria3"]:checked').value);
-            const r4 = parseInt(document.querySelector('input[name="criteria4"]:checked').value);
-            const r5 = parseInt(document.querySelector('input[name="criteria5"]:checked').value);
-            const r6 = parseInt(document.querySelector('input[name="criteria6"]:checked').value);
+        <div class="criterion-box">
+            <div class="criterion-title">6. University Listing, Planning & Support</div>
+            <div class="stars">
+                <input type="radio" id="c6-5" name="crit6" value="5" required><label for="c6-5">★</label>
+                <input type="radio" id="c6-4" name="crit6" value="4"><label for="c6-4">★</label>
+                <input type="radio" id="c6-3" name="crit6" value="3"><label for="c6-3">★</label>
+                <input type="radio" id="c6-2" name="crit6" value="2"><label for="c6-2">★</label>
+                <input type="radio" id="c6-1" name="crit6" value="1"><label for="c6-1">★</label>
+            </div>
+        </div>
 
-            // Construct dynamic automated summary narrative
-            let builtParagraphSegments = [];
+        <button type="submit" id="submitBtn">Generate Review & Continue</button>
+    </form>
+</div>
 
-            builtParagraphSegments.push(r1 >= 4 ? phraseLibrary.criteria1.high[0] : phraseLibrary.criteria1.low[0]);
-            builtParagraphSegments.push(r2 >= 4 ? phraseLibrary.criteria2.high[0] : phraseLibrary.criteria2.low[0]);
-            builtParagraphSegments.push(r3 >= 4 ? phraseLibrary.criteria3.high[1] : phraseLibrary.criteria3.low[1]);
-            builtParagraphSegments.push(r4 >= 4 ? phraseLibrary.criteria4.high[0] : phraseLibrary.criteria4.low[0]);
-            builtParagraphSegments.push(r5 >= 4 ? phraseLibrary.criteria5.high[1] : phraseLibrary.criteria5.low[1]);
-            builtParagraphSegments.push(r6 >= 4 ? phraseLibrary.criteria6.high[0] : phraseLibrary.criteria6.low[0]);
+<div class="container modal" id="successContainer">
+    <h2>Review Generated Successfully!</h2>
+    <div class="alert-toast" id="statusMessage">👇 Click the green button below to copy your text!</div>
+    
+    <div class="preview-box" id="reviewPreview"></div>
+    
+    <button type="button" class="copy-btn" id="actionBtn">📋 Copy Review & Open Google Reviews</button>
+</div>
 
-            // Final polished layout construction
-            sharedReviewPayloadString = builtParagraphSegments.join(" ");
+<script>
+    const GOOGLE_REVIEW_URL = "https://g.page/r/CfgAD8DzeRV6EAE/review"; 
+    
+    // ⚠️ REPLACE THIS WITH YOUR ACTUAL GEMINI API KEY
+    const GEMINI_API_KEY = "AQ.Ab8RN6JUjb91ge_Q8q-MhthCk9Sr5pvPGvTDfcWfN_i9NvSJPw"; 
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$AQ.Ab8RN6JUjb91ge_Q8q-MhthCk9Sr5pvPGvTDfcWfN_i9NvSJPw`;
 
-            // Update DOM and handle page transition safely
-            reviewTextContainer.textContent = sharedReviewPayloadString;
-            feedbackForm.classList.add('hidden');
-            reviewGenerationPage.classList.remove('hidden');
-        });
+    let generatedReviewText = "";
 
-        // Clipboard Copy Operations and Outbound Tab Routing
-        copyAndRedirectBtn.addEventListener('click', function() {
-            if (!sharedReviewPayloadString) {
-                alert("Review payload execution anomaly. Please try refreshing.");
-                return;
-            }
+    document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Humanizing Review with AI...";
 
-            // Modern clipboard text push handling
-            navigator.clipboard.writeText(sharedReviewPayloadString)
-                .then(() => {
-                    // Open Google review destination in isolated instance safely
-                    window.open(GOOGLE_REVIEW_URL, '_blank');
+        try {
+            const c1 = document.querySelector('input[name="crit1"]:checked').value;
+            const c2 = document.querySelector('input[name="crit2"]:checked').value;
+            const c3 = document.querySelector('input[name="crit3"]:checked').value;
+            const c4 = document.querySelector('input[name="crit4"]:checked').value;
+            const c5 = document.querySelector('input[name="crit5"]:checked').value;
+            const c6 = document.querySelector('input[name="crit6"]:checked').value;
+
+            // Constructing a detailed prompt for Gemini
+            const prompt = `
+                You are a real human client (either a parent or a high school student) writing a genuine, highly natural Google review for "Uppseekers", an elite student mentoring and study abroad counseling service.
+                
+                Write a unique, humanized review based on these star scores out of 5:
+                - Advisor Support Pre-onboarding: ${c1}/5
+                - Counselor Mentorship & Support: ${c2}/5
+                - Roadmap Clarity & Step-by-Step Structure: ${c3}/5
+                - Backend/Operations Services Support: ${c4}/5
+                - Profile Building Frameworks & Milestone Setup: ${c5}/5
+                - University Listing & Strategic College Planning: ${c6}/5
+                
+                CRITICAL INSTRUCTIONS to bypass AI detectors and Google Spam flags:
+                1. DO NOT use structural clichés like "Look no further", "In conclusion", "Testament to", "Kudos", "Phenomenal", "Game-changer".
+                2. Vary vocabulary entirely. Write like a regular person typing on a phone: casual yet articulate. Use minor stylistic nuances (like an occasional exclamation mark or varying sentence lengths).
+                3. Address the aspects that scored high (4-5 stars) with natural appreciation, and neutrally touch upon or briefly skip/smooth over low scores (1-3 stars) without sounding robotic.
+                4. Output ONLY the review text itself. No intros, no quotation marks, no outro notes. Keep it within 3-5 sentences.
+            `;
+
+            // API Call setup
+            const response = await fetch(GEMINI_API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: {
+                        temperature: 0.95, // High variation ensures unique outputs every time
+                        maxOutputTokens: 250
+                    }
                 })
-                .catch(err => {
-                    console.error('Clipboard execution warning: ', err);
-                    // Native fallback context option routine
-                    window.open(GOOGLE_REVIEW_URL, '_blank');
-                });
+            });
+
+            if (!response.ok) throw new Error("API call failed");
+
+            const data = await response.json();
+            generatedReviewText = data.candidates[0].content.parts[0].text.trim();
+
+            // Render view state transition
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('successContainer').style.display = 'block';
+            document.getElementById('reviewPreview').innerText = generatedReviewText;
+
+        } catch(err) {
+            alert("Something went wrong generating the AI review. Please check your network or API key configuration.");
+            console.error(err);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Generate Review & Continue";
+        }
+    });
+
+    document.getElementById('actionBtn').addEventListener('click', function() {
+        navigator.clipboard.writeText(generatedReviewText).then(() => {
+            document.getElementById('statusMessage').innerHTML = "✅ Text Copied to Clipboard! Opening Google Reviews now...";
+            document.getElementById('statusMessage').style.backgroundColor = "#d1fae5";
+            document.getElementById('statusMessage').style.color = "#065f46";
+        }).catch(err => {
+            const textArea = document.createElement("textarea");
+            textArea.value = generatedReviewText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
         });
-    </script>
+
+        setTimeout(function() {
+            window.open(GOOGLE_REVIEW_URL, '_blank');
+        }, 500);
+    });
+</script>
+
 </body>
 </html>
