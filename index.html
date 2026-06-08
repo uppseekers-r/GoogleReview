@@ -15,7 +15,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.5;
@@ -32,240 +32,168 @@
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
 
-        h2 {
-            text-align: center;
-            margin-top: 0;
-            color: #0f172a;
+        h2 { text-align: center; margin-top: 0; color: #0f172a; }
+        p.subtitle { text-align: center; color: #64748b; margin-bottom: 25px; }
+
+        .input-group { margin-bottom: 20px; }
+        .input-group label { font-weight: 600; display: block; margin-bottom: 6px; }
+        .input-group input {
+            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 1rem;
         }
 
-        p.subtitle {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 30px;
-        }
-
-        .criterion-box {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .criterion-label {
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .stars {
-            display: flex;
-            gap: 8px;
-            flex-direction: row-reverse;
-            justify-content: flex-end;
-        }
-
-        .star {
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--star-color);
-            transition: color 0.2s ease;
-        }
-
-        /* Hover and active states using CSS sibling combinators */
-        .star:hover,
-        .star:hover ~ .star,
-        .star.active,
-        .star.active ~ .star {
-            color: var(--star-active);
-        }
+        .criterion-box { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
+        .criterion-label { font-weight: 600; margin-bottom: 6px; display: block; }
+        
+        .stars { display: flex; gap: 8px; flex-direction: row-reverse; justify-content: flex-end; }
+        .star { font-size: 2rem; cursor: pointer; color: var(--star-color); transition: color 0.1s ease; }
+        .star:hover, .star:hover ~ .star, .star.active, .star.active ~ .star { color: var(--star-active); }
 
         button {
-            display: block;
-            width: 100%;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 20px;
+            display: block; width: 100%; background-color: var(--primary-color); color: white; border: none;
+            padding: 14px; font-size: 1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; margin-top: 20px;
         }
-
-        button:hover {
-            background-color: #1d4ed8;
-        }
-
-        .notice {
-            font-size: 0.85rem;
-            color: #64748b;
-            text-align: center;
-            margin-top: 12px;
-        }
+        button:hover { background-color: #1d4ed8; }
+        button:disabled { background-color: #94a3b8; cursor: not-allowed; }
+        .notice { font-size: 0.85rem; color: #64748b; text-align: center; margin-top: 12px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>We Value Your Feedback!</h2>
-    <p class="subtitle">Please rate your experience. Your generated review will be copied automatically to paste onto Google.</p>
+    <p class="subtitle">Rate us to instantly generate a personalized review to paste on Google.</p>
 
     <form id="feedbackForm">
-        <div class="criterion-box" data-id="advisor">
+        <div class="input-group">
+            <label for="studentName">Student/Parent Name (Optional)</label>
+            <input type="text" id="studentName" placeholder="e.g., Rahul or Sarah's Parent">
+        </div>
+
+        <div class="criterion-box" data-id="Advisor Support Pre-onboarding">
             <span class="criterion-label">1. Advisor Support Pre-onboarding</span>
-            <div class="stars">
-                <span class="star" data-value="5">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="1">&#9733;</span>
-            </div>
+            <div class="stars"><span class="star" data-value="5">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="1">&#9733;</span></div>
         </div>
 
-        <div class="criterion-box" data-id="counsellor">
+        <div class="criterion-box" data-id="Counsellor Support">
             <span class="criterion-label">2. Counsellor Support</span>
-            <div class="stars">
-                <span class="star" data-value="5">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="1">&#9733;</span>
-            </div>
+            <div class="stars"><span class="star" data-value="5">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="1">&#9733;</span></div>
         </div>
 
-        <div class="criterion-box" data-id="roadmap">
+        <div class="criterion-box" data-id="Roadmap Clarity">
             <span class="criterion-label">3. Roadmap Clarity & Structure</span>
-            <div class="stars">
-                <span class="star" data-value="5">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="1">&#9733;</span>
-            </div>
+            <div class="stars"><span class="star" data-value="5">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="1">&#9733;</span></div>
         </div>
 
-        <div class="criterion-box" data-id="postOnboarding">
+        <div class="criterion-box" data-id="Services Support after onboarding">
             <span class="criterion-label">4. Services Support After Onboarding</span>
-            <div class="stars">
-                <span class="star" data-value="5">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="1">&#9733;</span>
-            </div>
+            <div class="stars"><span class="star" data-value="5">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="1">&#9733;</span></div>
         </div>
 
-        <div class="criterion-box" data-id="profileBuilding">
+        <div class="criterion-box" data-id="Profile Building And Planning">
             <span class="criterion-label">5. Profile Building And Planning</span>
-            <div class="stars">
-                <span class="star" data-value="5">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="1">&#9733;</span>
-            </div>
+            <div class="stars"><span class="star" data-value="5">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="1">&#9733;</span></div>
         </div>
 
-        <div class="criterion-box" data-id="universityListing">
+        <div class="criterion-box" data-id="University listing and planning">
             <span class="criterion-label">6. University Listing, Planning, and Help</span>
-            <div class="stars">
-                <span class="star" data-value="5">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="1">&#9733;</span>
-            </div>
+            <div class="stars"><span class="star" data-value="5">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="1">&#9733;</span></div>
         </div>
 
-        <button type="submit">Copy Review & Open Google Reviews</button>
-        <p class="notice">Note: Clicking will open our Google page. Just paste (Ctrl+V) your pre-written text there!</p>
+        <button type="submit" id="submitBtn">Generate Review & Open Google</button>
+        <p class="notice">Clicking will auto-copy the AI text. Just paste (Ctrl+V) on Google!</p>
     </form>
 </div>
 
 <script>
-    // CHANGE THIS URL to your actual Google Review Link
-    // To get a direct link: Search your business on Google -> Click "Get more reviews" -> Copy link
+    // CHANGE THIS TO YOUR GOOGLE REVIEW LINK
     const GOOGLE_REVIEW_URL = "https://g.page/r/CfnvJLxAqHnPEBM/review";
 
-    // Personalized text components to randomize humanized phrases
-    const reviewPhrases = {
-        advisor: {
-            high: ["The pre-onboarding guidance was incredibly clear and welcoming.", "Amazing early advisor support; they answered every question patiently."],
-            low: ["The initial onboarding overview left room for improvement.", "Pre-onboarding coordination could be faster."]
-        },
-        counsellor: {
-            high: ["Our assigned counsellor is knowledgeable and highly empathetic.", "The counseling sessions offered deep clarity and stress relief."],
-            low: ["Counsellor communication could be a bit more proactive.", "Expectations from the counseling end could be better aligned."]
-        },
-        roadmap: {
-            high: ["The academic roadmap layout is precise and easy to follow.", "Loved how structured and realistic the milestones are."],
-            low: ["The roadmap felt a bit generic initially.", "Would appreciate a more adaptive timeline approach."]
-        },
-        postOnboarding: {
-            high: ["Post-onboarding execution has been flawless and supportive.", "Continuous operational support after joining has been excellent."],
-            low: ["Post-onboarding service transitions could be smoother.", "Response times after onboarding slowed down slightly."]
-        },
-        profileBuilding: {
-            high: ["Profile building strategies are practical and highly tailored.", "Excellent strategic planning regarding extracurriculars and profile depth."],
-            low: ["Profile planning felt somewhat formulaic.", "Wanted more unique options during profile development."]
-        },
-        universityListing: {
-            high: ["The shortlisting process was highly analytical and accurate.", "Invaluable support regarding target university selections and applications."],
-            low: ["The university choices lacked a few alternative target options.", "University application help could use more collaborative sessions."]
-        }
+    const ratings = {
+        "Advisor Support Pre-onboarding": 5,
+        "Counsellor Support": 5,
+        "Roadmap Clarity": 5,
+        "Services Support after onboarding": 5,
+        "Profile Building And Planning": 5,
+        "University listing and planning": 5
     };
 
-    const ratings = { advisor: 5, counsellor: 5, roadmap: 5, postOnboarding: 5, profileBuilding: 5, universityListing: 5 };
-
-    // Star Selection Logic
+    // Star UI handling
     document.querySelectorAll('.star').forEach(star => {
         star.addEventListener('click', (e) => {
             const box = e.target.closest('.criterion-box');
             const criterionId = box.dataset.id;
             const value = parseInt(e.target.dataset.value);
-            
             ratings[criterionId] = value;
-
-            // Update UI
-            const stars = box.querySelectorAll('.star');
-            stars.forEach(s => {
-                if (parseInt(s.dataset.value) <= value) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
+            box.querySelectorAll('.star').forEach(s => {
+                s.classList.toggle('active', parseInt(s.dataset.value) <= value);
             });
         });
     });
 
-    // Handle Form Submission
-    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+    // Form Submission
+    document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-
-        // 1. Generate humanized summary paragraphs dynamically based on rating thresholds
-        let reviewSentences = [];
         
-        for (const [key, score] of Object.entries(ratings)) {
-            const pool = score >= 4 ? reviewPhrases[key].high : reviewPhrases[key].low;
-            // Pick a pseudo-random sentence from the array to keep it looking distinct
-            const sentence = pool[Math.floor(Math.random() * pool.length)];
-            reviewSentences.push(sentence);
+        // Retrieve key safely from browser memory (localStorage)
+        let geminiKey = localStorage.getItem('safekey');
+        
+        // If not found, ask for it once and save it locally in your browser
+        if (!geminiKey) {
+            geminiKey = prompt("Please set your Gemini API Key once to enable AI generation:");
+            if (geminiKey) {
+                localStorage.setItem('safekey', geminiKey);
+            } else {
+                alert("API Key required for dynamic generation.");
+                return;
+            }
         }
 
-        // Shuffle briefly or chunk them into a beautiful continuous paragraph
-        const finalReviewText = `Highly recommend their services! ${reviewSentences.slice(0, 3).join(' ')}\n\n${reviewSentences.slice(3).join(' ')}`;
+        const submitBtn = document.getElementById('submitBtn');
+        const nameInput = document.getElementById('studentName').value || "a student/parent";
+        
+        submitBtn.disabled = true;
+        submitBtn.innerText = "AI is writing your review...";
 
-        // 2. Force Copy text directly to user's clipboard
-        navigator.clipboard.writeText(finalReviewText).then(() => {
-            alert("Your personalized review has been generated and copied to your clipboard! Click OK to open Google Reviews and just Paste (Ctrl+V).");
-            // 3. Open Google review link in new window
+        let ratingSummary = "";
+        for (const [criterion, score] of Object.entries(ratings)) {
+            ratingSummary += `- ${criterion}: ${score}/5 stars\n`;
+        }
+
+        const promptText = `You are a real student or parent writing an organic, natural, humanized Google Review for an educational consulting brand. 
+        The reviewer context is: ${nameInput}.
+        They rated the following parameters out of 5 stars:
+        ${ratingSummary}
+        
+        Write a brief, high-quality, continuous 2-line review based on these scores. 
+        CRITICAL RULES:
+        1. Do not use generic AI buzzwords like 'testament', 'beacon', 'seamless', 'delighted', 'pleased'.
+        2. Make it sound like a real person wrote it fast on their phone (use casual phrasing).
+        3. Do not list the scores explicitly, instead weave the sentiment smoothly.
+        4. Return ONLY the review text. No introductions, no quotation marks.`;
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+            });
+
+            const data = await response.json();
+            let generatedReview = data.candidates[0].content.parts[0].text.trim();
+            generatedReview = generatedReview.replace(/^["']|["']$/g, '');
+
+            await navigator.clipboard.writeText(generatedReview);
+            alert("Success! Your unique review has been created and copied to your clipboard. Click OK to open Google Reviews and press Ctrl+V to paste.");
             window.open(GOOGLE_REVIEW_URL, '_blank');
-        }).catch(err => {
-            console.error('Could not copy text: ', err);
-            // Fallback strategy if clipboard permissions fail
-            alert("Review Generated! Please copy this text manually:\n\n" + finalReviewText);
-        });
+
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Connection error or invalid API key. Directing to Google Reviews.");
+            window.open(GOOGLE_REVIEW_URL, '_blank');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Generate Review & Open Google";
+        }
     });
 </script>
 </body>
